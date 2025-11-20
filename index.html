@@ -15,9 +15,7 @@
 
     <script type="text/javascript" src="unmined.map.properties.js"></script>
     <script type="text/javascript" src="unmined.map.regions.js"></script>
-    
     <script type="text/javascript" src="unmined.map.players.js"></script>
-
     <script type="text/javascript" src="custom.markers.js"></script>
     <script type="text/javascript" src="unmined.js"></script>
     <link rel="stylesheet" type="text/css" href="index.css">
@@ -36,7 +34,7 @@
         if (!UnminedMapProperties.markers) { UnminedMapProperties.markers = []; }
 
         // ==========================================
-        // 1. TİCARET MERKEZİ (Sabit İkon)
+        // 1. TİCARET MERKEZİ
         // ==========================================
         UnminedMapProperties.markers.push({
             x: -367, z: 177,
@@ -44,47 +42,32 @@
             imageScale: 0.05, imageAnchor: [0.5, 1],
             text: "Ticaret Merkezi", textColor: "white", offsetX: 0, offsetY: 20,
             font: "bold 16px sans-serif"
-        // --- OSMANLI KALESİ ---
+        }); // <-- SEN BURAYI UNUTMUŞTUN, EKLEDİM.
+
+        // ==========================================
+        // 2. OSMANLI KALESİ
+        // ==========================================
         UnminedMapProperties.markers.push({
             x: -2470, 
             z: -299,
-            
-            // Kale İkonu (İnternetten bulduğum kale resmi)
             image: "https://cdn-icons-png.flaticon.com/512/2909/2909540.png",
-            imageScale: 0.05, // Boyut ayarı
-            imageAnchor: [0.5, 1], // İkonun alt ucu tam koordinata bassın
-
-            // Yazı Ayarları
-            text: "Osmanlı", 
-            textColor: "gold", // Altın sarısı yaptım, Osmanlı'ya yakışır :)
-            offsetX: 0, 
-            offsetY: 20, 
+            imageScale: 0.05, imageAnchor: [0.5, 1],
+            text: "Osmanlı", textColor: "gold", offsetX: 0, offsetY: 20,
             font: "bold 16px sans-serif"
         });
 
         // ==========================================
-        // 2. OYUNCU KAFALARI (OTOMATİK)
+        // 3. OYUNCU KAFALARI (OTOMATİK)
         // ==========================================
-        
-        // Botun getirdiği listeyi kontrol et ve ekle
         if (typeof UnminedPlayers !== 'undefined' && UnminedPlayers.length > 0) {
-            
             UnminedPlayers.forEach(function(oyuncu) {
-                
-                // Her oyuncu için kafa ikonu oluştur
                 UnminedMapProperties.markers.push({
                     x: oyuncu.x, 
                     z: oyuncu.z,
-                    
-                    // Oyuncunun ismine göre kafasını (Head) bulur
                     image: "https://minotar.net/helm/" + oyuncu.name + "/32.png",
-                    
-                    imageScale: 1.0, 
-                    imageAnchor: [0.5, 0.5],
-                    text: oyuncu.name, 
-                    textColor: "yellow",
-                    offsetX: 0, offsetY: 25, 
-                    font: "bold 14px sans-serif"
+                    imageScale: 1.0, imageAnchor: [0.5, 0.5],
+                    text: oyuncu.name, textColor: "yellow",
+                    offsetX: 0, offsetY: 25, font: "bold 14px sans-serif"
                 });
             });
         }
