@@ -3,78 +3,82 @@
 
 <head>
     <title>Sehsun Haritası</title>
-
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
     <link rel="stylesheet" type="text/css" href="lib/ol.css">
     <script src="lib/ol.js"></script>
-
     <link href="lib/ol-contextmenu.css" rel="stylesheet">
     <script src="lib/ol-contextmenu.iife.js"></script>
-
     <script type="text/javascript" src="lib/toastify-js"></script>
     <link rel="stylesheet" type="text/css" href="lib/toastify.min.css">
 
-
     <script type="text/javascript" src="unmined.map.properties.js"></script>
     <script type="text/javascript" src="unmined.map.regions.js"></script>
+    
     <script type="text/javascript" src="unmined.map.players.js"></script>
 
     <script type="text/javascript" src="custom.markers.js"></script>
-
     <script type="text/javascript" src="unmined.js"></script>
     <link rel="stylesheet" type="text/css" href="index.css">
 
 </head>
 
 <body>
+
     <div id="map"></div>
 
     <script type="text/javascript">
-
-        // Site Başlığı
+        // Başlık
         document.title = "Sehsun Haritası";
 
-        // Mevcut Markerlar (Varsa)
-        if (UnminedCustomMarkers && UnminedCustomMarkers.isEnabled && UnminedCustomMarkers.markers) {
-            UnminedMapProperties.markers = UnminedMapProperties.markers.concat(UnminedCustomMarkers.markers);
-        }
-        
-        if (UnminedPlayers && UnminedPlayers.length > 0) {
-            UnminedMapProperties.playerMarkers = Unmined.createPlayerMarkers(UnminedPlayers);
-        }
+        // Marker Listesini Hazırla
+        if (!UnminedMapProperties.markers) { UnminedMapProperties.markers = []; }
 
-        // --- TİCARET MERKEZİ (İKONLU) ---
-        // Marker listesi yoksa oluştur
-        if (!UnminedMapProperties.markers) {
-            UnminedMapProperties.markers = [];
-        }
-
-        // Ticaret Merkezini listeye ekle
+        // ==========================================
+        // 1. TİCARET MERKEZİ (Sabit İkon)
+        // ==========================================
         UnminedMapProperties.markers.push({
-            x: -367,
-            z: 177,
-            
-            // İKON AYARLARI
+            x: -367, z: 177,
             image: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
-            imageScale: 0.05, // %5 boyutunda
-            imageAnchor: [0.5, 1], // İkonun ucu koordinata bassın
-
-            // YAZI AYARLARI
-            text: "Ticaret Merkezi", 
-            textColor: "white", 
-            offsetX: 0,
-            offsetY: 20, 
+            imageScale: 0.05, imageAnchor: [0.5, 1],
+            text: "Ticaret Merkezi", textColor: "white", offsetX: 0, offsetY: 20,
             font: "bold 16px sans-serif"
         });
-        // --------------------------------
 
-        // Haritayı Başlat
+        // ==========================================
+        // 2. OYUNCU KAFALARI (OTOMATİK)
+        // ==========================================
+        
+        // Botun getirdiği listeyi kontrol et ve ekle
+        if (typeof UnminedPlayers !== 'undefined' && UnminedPlayers.length > 0) {
+            
+            UnminedPlayers.forEach(function(oyuncu) {
+                
+                // Her oyuncu için kafa ikonu oluştur
+                UnminedMapProperties.markers.push({
+                    x: oyuncu.x, 
+                    z: oyuncu.z,
+                    
+                    // Oyuncunun ismine göre kafasını (Head) bulur
+                    image: "https://minotar.net/helm/" + oyuncu.name + "/32.png",
+                    
+                    imageScale: 1.0, 
+                    imageAnchor: [0.5, 0.5],
+                    text: oyuncu.name, 
+                    textColor: "yellow",
+                    offsetX: 0, offsetY: 25, 
+                    font: "bold 14px sans-serif"
+                });
+            });
+        }
+
+        // ==========================================
+
+        // HARİTAYI BAŞLAT
         const mapElement = document.getElementById('map');
         const unmined = new Unmined(mapElement, UnminedMapProperties, UnminedRegions);
 
     </script>
 </body>
-
 </html>
