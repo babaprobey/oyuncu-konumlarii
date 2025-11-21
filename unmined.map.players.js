@@ -1,6 +1,6 @@
 var UnminedPlayers = [
-{"name":"Emreprotr1934","x":-402.96, "z":188.22},
-{"name":"demote","x":-2161.54, "z":-253.27},
-{"name":"UCANDREAM","x":-388.64, "z":198.35},
+{"name":"Emreprotr1934","x":-408.94, "z":192.41},
+{"name":"demote","x":-2161.63, "z":-252.59},
+{"name":"UCANDREAM","x":-390.17, "z":194.44},
 {"name":"suleymanpasha","x":-356.5, "z":182.45},
 ];
