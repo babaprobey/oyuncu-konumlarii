@@ -1,9 +1,9 @@
 var UnminedPlayers = [
-{"name":"UCANDREAM","x":-129.08, "z":750.97},
-{"name":"trabzonspor6115","x":-127.25, "z":764.53},
-{"name":"szeus","x":-128.31, "z":764.83},
-{"name":"BabAlPro","x":-2507.63, "z":-289.56},
-{"name":"Maksur","x":-129.19, "z":765.3},
-{"name":"ENESAYKGS","x":-2455.13, "z":-309.15},
-{"name":"suleymanpasha","x":-354.5, "z":178.5},
+{"name":"UCANDREAM","x":-151.8, "z":752.75},
+{"name":"trabzonspor6115","x":-69.18, "z":765.1},
+{"name":"szeus","x":-466.93, "z":755.3},
+{"name":"BabAlPro","x":-2498.16, "z":-286.97},
+{"name":"Maksur","x":-448.7, "z":755.47},
+{"name":"ENESAYKGS","x":-2491.73, "z":-290.21},
+{"name":"suleymanpasha","x":-145.57, "z":750.5},
 ];
