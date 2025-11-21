@@ -22,11 +22,72 @@
     <script type="text/javascript" src="unmined.js"></script>
     <link rel="stylesheet" type="text/css" href="index.css">
 
+    <style>
+        /* Sağ Taraf Oyuncu Listesi Tasarımı */
+        .oyuncu-listesi {
+            position: absolute;
+            top: 10px;
+            right: 10px; /* Sağ tarafa yapışık */
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7); /* Yarı saydam siyah */
+            color: white;
+            width: 200px;
+            border-radius: 8px;
+            padding: 10px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            backdrop-filter: blur(5px); /* Arka planı bulanıklaştırır */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .liste-baslik {
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 1px solid #555;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            text-align: center;
+            color: #ffcc00; /* Altın sarısı başlık */
+        }
+
+        .oyuncu-kutu {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .oyuncu-kutu:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .oyuncu-kafa {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+
+        .oyuncu-isim {
+            font-size: 14px;
+            font-weight: 500;
+        }
+    </style>
+
 </head>
 
 <body>
 
     <div id="map"></div>
+
+    <div class="oyuncu-listesi">
+        <div class="liste-baslik">AKTİF OYUNCULAR</div>
+        <div id="listeIcerik">
+            <div style="text-align:center; color:#aaa; font-size:12px;">Yükleniyor...</div>
+        </div>
+    </div>
 
     <script type="text/javascript">
         // Başlık
@@ -39,51 +100,68 @@
         // 1. TİCARET MERKEZİ
         // ==========================================
         UnminedMapProperties.markers.push({
-            x: -367, 
-            z: 177,
+            x: -367, z: 177,
             image: "ticaret.png",
-            imageScale: 0.02, 
-            imageAnchor: [0.5, 1],
-            text: "Ticaret Merkezi", 
-            textColor: "white", 
-            offsetX: 0, 
-            offsetY: 20,
-            font: "bold 16px sans-serif"
-        }); // <-- SENİN UNUTTUĞUN KAPANIŞ BURASIYDI!
-
-        // ==========================================
-        // 2. OSMANLI KALESİ
-        // ==========================================
-        UnminedMapProperties.markers.push({
-            x: -2470, 
-            z: -299,
-            image: "kale.png",
-            imageScale: 0.02, 
-            imageAnchor: [0.5, 1],
-            text: "Osmanlı", 
-            textColor: "gold", 
-            offsetX: 0, 
-            offsetY: 20,
+            imageScale: 0.02, imageAnchor: [0.5, 1],
+            text: "Ticaret Merkezi", textColor: "white", offsetX: 0, offsetY: 20,
             font: "bold 16px sans-serif"
         });
 
         // ==========================================
-        // 3. OYUNCU KAFALARI (OTOMATİK)
+        // 2. OSMANLI KALESİ (Dosyadan Resimli)
         // ==========================================
+        UnminedMapProperties.markers.push({
+            x: -2470, z: -299,
+            image: "kale.png", // Senin yüklediğin resim
+            imageScale: 0.02, imageAnchor: [0.5, 1],
+            text: "Osmanlı", textColor: "gold", offsetX: 0, offsetY: 20,
+            font: "bold 16px sans-serif"
+        });
+
+        // ==========================================
+        // 3. OYUNCULARI HARİTAYA VE LİSTEYE EKLE
+        // ==========================================
+        
+        const listeKutusu = document.getElementById('listeIcerik');
+        let oyuncuSayisi = 0;
+
         if (typeof UnminedPlayers !== 'undefined' && UnminedPlayers.length > 0) {
+            
+            // Önce listeyi temizle
+            listeKutusu.innerHTML = "";
+
             UnminedPlayers.forEach(function(oyuncu) {
+                oyuncuSayisi++;
+
+                // A) Haritaya Marker Ekle
                 UnminedMapProperties.markers.push({
-                    x: oyuncu.x, 
-                    z: oyuncu.z,
+                    x: oyuncu.x, z: oyuncu.z,
                     image: "https://minotar.net/helm/" + oyuncu.name + "/32.png",
-                    imageScale: 1.0, 
-                    imageAnchor: [0.5, 0.5],
-                    text: oyuncu.name, 
-                    textColor: "yellow",
-                    offsetX: 0, offsetY: 25, 
-                    font: "bold 14px sans-serif"
+                    imageScale: 1.0, imageAnchor: [0.5, 0.5],
+                    text: oyuncu.name, textColor: "yellow",
+                    offsetX: 0, offsetY: 25, font: "bold 14px sans-serif"
                 });
+
+                // B) Sağdaki Listeye Ekle
+                // Her oyuncu için HTML oluştur
+                const oyuncuSatiri = document.createElement("div");
+                oyuncuSatiri.className = "oyuncu-kutu";
+                oyuncuSatiri.innerHTML = `
+                    <img src="https://minotar.net/helm/${oyuncu.name}/32.png" class="oyuncu-kafa">
+                    <span class="oyuncu-isim">${oyuncu.name}</span>
+                `;
+                
+                // Tıklayınca oyuncuya gitme özelliği (Opsiyonel, şimdilik sadece liste)
+                listeKutusu.appendChild(oyuncuSatiri);
             });
+        } 
+        
+        // Eğer kimse yoksa mesaj göster
+        if (oyuncuSayisi === 0) {
+            listeKutusu.innerHTML = "<div style='text-align:center; color:#aaa;'>Şu an kimse yok.</div>";
+        } else {
+            // Başlığa sayı ekle (Örn: AKTİF OYUNCULAR (3))
+            document.querySelector('.liste-baslik').innerText = `AKTİF OYUNCULAR (${oyuncuSayisi})`;
         }
 
         // ==========================================
