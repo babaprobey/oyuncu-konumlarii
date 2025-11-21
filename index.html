@@ -26,8 +26,12 @@
         /* Sağ Taraf Oyuncu Listesi Tasarımı */
         .oyuncu-listesi {
             position: absolute;
-            top: 10px;
+            
+            /* --- BURAYI DEĞİŞTİRDİK (AŞAĞI ALDIK) --- */
+            top: 100px; /* Eskiden 10px idi, şimdi 100px aşağıda */
             right: 10px; /* Sağ tarafa yapışık */
+            /* ---------------------------------------- */
+            
             z-index: 1000;
             background: rgba(0, 0, 0, 0.7); /* Yarı saydam siyah */
             color: white;
@@ -143,15 +147,12 @@
                 });
 
                 // B) Sağdaki Listeye Ekle
-                // Her oyuncu için HTML oluştur
                 const oyuncuSatiri = document.createElement("div");
                 oyuncuSatiri.className = "oyuncu-kutu";
                 oyuncuSatiri.innerHTML = `
                     <img src="https://minotar.net/helm/${oyuncu.name}/32.png" class="oyuncu-kafa">
                     <span class="oyuncu-isim">${oyuncu.name}</span>
                 `;
-                
-                // Tıklayınca oyuncuya gitme özelliği (Opsiyonel, şimdilik sadece liste)
                 listeKutusu.appendChild(oyuncuSatiri);
             });
         } 
@@ -160,7 +161,7 @@
         if (oyuncuSayisi === 0) {
             listeKutusu.innerHTML = "<div style='text-align:center; color:#aaa;'>Şu an kimse yok.</div>";
         } else {
-            // Başlığa sayı ekle (Örn: AKTİF OYUNCULAR (3))
+            // Başlığa sayı ekle
             document.querySelector('.liste-baslik').innerText = `AKTİF OYUNCULAR (${oyuncuSayisi})`;
         }
 
