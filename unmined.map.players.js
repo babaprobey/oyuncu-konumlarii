@@ -1,6 +1,6 @@
 var UnminedPlayers = [
 {"name":"UCANDREAM","x":-128.42, "z":107.46},
-{"name":"pocisentarci","x":-388.7, "z":190.29},
-{"name":"Maksur","x":-5.78, "z":844.08},
-{"name":"MrSoul1","x":-125.49, "z":105.44},
+{"name":"pocisentarci","x":-388.7, "z":190.43},
+{"name":"Maksur","x":-11.68, "z":832.28},
+{"name":"MrSoul1","x":-126.7, "z":106.27},
 ];
